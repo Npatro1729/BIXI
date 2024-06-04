@@ -1,13 +1,13 @@
 import { connect } from '@/dbConfig/config';
 import User from "@/models/userModel";
-import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 interface UserRequestBody {
     email: string;
     password: string;
 }
 
-export default async function handler(request: NextRequest, response: NextResponse) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     await connect();
     try {
         if (!request.body) {
