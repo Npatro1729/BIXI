@@ -8,15 +8,22 @@ interface UserRequestBody {
 }
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
-    await connect();
-    try {
-        if (!request.body) {
-            return response.status(400).json({ error: "Request body is empty" });
+    if (request.method === 'POST') {
+        const { email, password } = request.body;
+    
+        if (!email || !password) {
+          return response.status(400).json({ error: 'Email and password are required' });
         }
+    
+    try {
+        await connect();
+        // if (!request.body) {
+        //     return response.status(400).json({ error: "Request body is empty" });
+        // }
 
-        const requestBody: UserRequestBody = typeof request.body === 'string' ? JSON.parse(request.body) : request.body;
-        const { email, password } = requestBody;
-        console.log(request.body);
+        //const requestBody: UserRequestBody = typeof request.body === 'string' ? JSON.parse(request.body) : request.body;
+        // const { email, password } = requestBody;
+        // console.log(request.body);
 
         const user = await User.findOne({ email });
         if (user) {
@@ -36,6 +43,8 @@ export default async function handler(request: NextApiRequest, response: NextApi
             savedUser
         });
     } catch (error: any) {
-        return response.status(500).json({ error: error.message });
+        console.error('Signup error:', error);
+        response.status(500).json({ error: 'Internal Server Error' });
     }
+}
 }
