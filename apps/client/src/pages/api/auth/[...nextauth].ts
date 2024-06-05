@@ -2,7 +2,7 @@ import NextAuth,{NextAuthOptions} from "next-auth"
 import  CredentialsProvider  from "next-auth/providers/credentials";
 import user from "@/models/userModel"
 import { connect } from '@/dbConfig/config';
-import { NextApiRequest, NextApiResponse } from 'next';
+
 
 const authOptions: NextAuthOptions = {
     session: {
@@ -37,24 +37,5 @@ const authOptions: NextAuthOptions = {
         signIn:"/Login"
     }
 };
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-      res.setHeader('Access-Control-Allow-Origin', process.env.NEXT_PUBLIC_DOMAIN || ''); // Replace '*' with your actual origin
-      res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-      res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, X-HTTP-Method-Override, Content-Type, Authorization, Accept'
-      );
-  
-      if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-      }
-  
-      await NextAuth(req, res, authOptions);
-    } catch (error) {
-      console.error('Error in NextAuth API route:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
+
+export default NextAuth(authOptions);
