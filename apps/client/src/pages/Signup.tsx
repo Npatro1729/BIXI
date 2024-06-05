@@ -11,7 +11,7 @@ export default function signup(){
     e.preventDefault();
       setLoading(true);
       try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_DOMAIN}/api/users/signup`, {
+        const response = await axios.post("api/users/signup", {
           email: userinfo.email,
           password: userinfo.password,
         },
