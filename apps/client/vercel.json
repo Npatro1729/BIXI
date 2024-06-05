@@ -1,0 +1,10 @@
+{
+    "routes":[{
+        "src" : "/(.)*",
+        "dest":"src/pages/api/auth/[...nextauth].ts",
+        "methods":["GET","POST","PUT","DELETE","PATCH","OPTIONS"],
+        "haders":{
+            "Access-Control-Allow-Origin":"*"
+        }
+    }]
+}
