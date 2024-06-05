@@ -41,7 +41,7 @@ export default function login(){
             </div>
         ) : (
         <div style={{background : "#1f998c",}} className="flex justify-center items-center h-screen">
-        <div className="w:48 md:w-96 p-6 shadow-lg bg-white rounded-md">
+        <div className="w-96 p-6 shadow-lg bg-white rounded-md">
             <h1 className="text-stone-950 font-semibold text-center text-3xl antialiased font-roboto"> LOGIN</h1>
              <div className="mt-3">
                 <label htmlFor="email" className = "block text-base mb-2 text-stone-950">Email</label>
