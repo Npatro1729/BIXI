@@ -51,20 +51,21 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/Login',
   },
-  callbacks: {
-     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-      }
-      return session;
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-      }
-      return token;
-    },
-  },
+  secret: process.env.NEXTAUTH_SECRET
+//   callbacks: {
+//      async session({ session, token }) {
+//       if (session.user) {
+//         session.user.id = token.id as string;
+//       }
+//       return session;
+//     },
+//     async jwt({ token, user }) {
+//       if (user) {
+//         token.id = user.id;
+//       }
+//       return token;
+//     },
+//   },
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
