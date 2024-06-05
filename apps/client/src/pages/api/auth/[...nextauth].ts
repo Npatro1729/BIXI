@@ -39,7 +39,7 @@ const authOptions: NextAuthOptions = {
 };
 export default async (req: NextApiRequest , res : NextApiResponse) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Replace '*' with your actual origin
+    res.setHeader('Access-Control-Allow-Origin',  process.env.NEXT_PUBLIC_DOMAIN || ''); // Replace '*' with your actual origin
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader(
         'Access-Control-Allow-Headers',

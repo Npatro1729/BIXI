@@ -14,7 +14,14 @@ export default function signup(){
         const response = await axios.post(`${process.env.NEXT_PUBLIC_DOMAIN}/api/users/signup`, {
           email: userinfo.email,
           password: userinfo.password,
-        });
+        },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+      );
   
         const data = response.data;
         console.log(data);
