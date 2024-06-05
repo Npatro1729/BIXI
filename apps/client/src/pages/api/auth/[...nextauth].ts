@@ -36,6 +36,7 @@ const authOptions: NextAuthOptions = {
         
         try {
           await connect();
+          console.log('NEXTAUTH_SECRET:', process.env.NEXTAUTH_SECRET);
           const User = await user.findOne({ email: email });
           if (User && User.password === password) {
             return { id: User._id.toString(), email: User.email };
@@ -52,20 +53,6 @@ const authOptions: NextAuthOptions = {
     signIn: '/Login',
   },
   secret: process.env.NEXTAUTH_SECRET
-//   callbacks: {
-//      async session({ session, token }) {
-//       if (session.user) {
-//         session.user.id = token.id as string;
-//       }
-//       return session;
-//     },
-//     async jwt({ token, user }) {
-//       if (user) {
-//         token.id = user.id;
-//       }
-//       return token;
-//     },
-//   },
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
