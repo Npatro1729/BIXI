@@ -46,7 +46,7 @@ export default function login(){
              <div className="mt-3">
                 <label htmlFor="email" className = "block text-base mb-2 text-stone-950">Email</label>
                 <input type="email" id="email" className="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-stone-950" 
-                placeholder="Enter Email..."
+                placeholder="Enter Email..." required
                 value={userinfo.email}
                 onChange={({target}) => {
                     setuserinfo({...userinfo,email:target.value})
@@ -56,7 +56,7 @@ export default function login(){
              <div className="mt-3">
                 <label htmlFor="password" className = "block text-base mb-2 text-stone-950">Password</label>
                 <input type="password" id="password" className="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-stone-950" 
-                placeholder="Enter password..."
+                placeholder="Enter password..." required
                 value={userinfo.password}
                 onChange={({target}) => {
                     setuserinfo({...userinfo,password:target.value})
