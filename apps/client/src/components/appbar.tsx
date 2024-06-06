@@ -8,43 +8,9 @@ import {useRouter} from"next/router"
 export function Appbar(){
     const router = useRouter();
    const {status,data} = useSession();
-//    const [username,setUsername] = useState(null);
-//    if(username){
-//       return <div style={{
-//          display : "flex",
-//          justifyContent : "space-between",
-//          paddingTop: 4
-//         }}>
-//          <div><Typography>CourseCraft</Typography></div>
-          
-//           <div style={{display : "flex",justifyContent : "space-between"}}>
-//                {/* <div>
-//                   {username}
-//                </div> */}
-//                <Button style={{marginRight : 10}} variant="contained" 
-//                 //   onClick={()=>{
-//                 //      window.location = "/createcourse"
-//                 //   }}
-//                > Create Courses</Button>
-//                 <Button style={{marginRight : 10,marginLeft : 10}} variant="contained" 
-//                 //   onClick={()=>{
-//                 //      window.location = "/courses"
-//                 //   }}
-//                > Courses</Button>
 
-//              <div style={{marginRight : 10}}>
-              
-//              <Button variant="contained"
-//                     //  onClick={()=>{
-//                     //     localStorage.setItem("token",null);
-//                     //      window.location = "/"
-//                     //  }}
-//              >logout</Button>
-//              </div>
-//           </div>
-         
-//         </div>
-//    }
+
+   
    if(status === "unauthenticated"){
    return <div style={{
     background : "#1f998c",
