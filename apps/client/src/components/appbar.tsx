@@ -9,13 +9,6 @@ export function Appbar(){
     const router = useRouter();
    const {status,data} = useSession();
 //    const [username,setUsername] = useState(null);
-
-useEffect(()=>{
-if(status === "unauthenticated"){
-   return 
-}
-},[status]);
-
 //    if(username){
 //       return <div style={{
 //          display : "flex",
