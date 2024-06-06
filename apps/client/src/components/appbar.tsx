@@ -1,30 +1,20 @@
 import Link from "next/link"
 import { useEffect, useState } from "react";
-import {signIn} from 'next-auth/react'
+import {signIn,useSession,signOut} from 'next-auth/react'
 import {useRouter} from"next/router"
+
 
 
 export function Appbar(){
     const router = useRouter();
-  //  const session = useSession();
-//    const navigate = useNavigate();
+   const {status,data} = useSession();
 //    const [username,setUsername] = useState(null);
-//    useEffect(()=>{
-//       let Token = localStorage.getItem("token");
-//      if(Token != null){ 
-//       fetch("http://localhost:3000/admin/me",{
-//          method : "GET",
-//          headers :{
-//             "Authorization": "Bearer " + localStorage.getItem("token")
-//          }
-//      }).then((res)=>{
-//          res.json().then((data)=>{
-//              setUsername(data.username);
-             
-//          })
-//      })
-//    }
-//    },[])
+
+useEffect(()=>{
+if(status === "unauthenticated"){
+   return 
+}
+},[status]);
 
 //    if(username){
 //       return <div style={{
@@ -62,6 +52,7 @@ export function Appbar(){
          
 //         </div>
 //    }
+   if(status === "unauthenticated"){
    return <div style={{
     background : "#1f998c",
     display : "flex",
@@ -89,6 +80,17 @@ export function Appbar(){
         </div>
      </div>
     
-   </div>
+   </div>}
+   if(status === "authenticated"){
+      return <div style={{
+         background : "#1f998c",
+        }} className="flex justify-end">
+             <div >
+        <button className="bg-green-700 mr-4 mt-3 rounded-full uppercase py-2 px-3 cursor-pointer tracking-wider border-2 hover:bg-transparent hover:text-stone-950 font-semibold"
+                onClick={()=> signOut({ callbackUrl: '/' })}
+        >Logout</button>
+        </div>
+      </div>
+   }
 }
 
