@@ -38,7 +38,7 @@ export default function signup(){
           console.error('error:', res.error);
         } else if (res?.ok) {
           setLoading(false);
-          Router.push("/main");
+          Router.push("/Booking");
         }
       } catch (error) {
         setLoading(false);

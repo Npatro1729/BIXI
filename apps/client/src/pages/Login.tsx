@@ -26,7 +26,7 @@ export default function login(){
             }
             if(res?.ok){
                 setLoading(false);
-                Router.push("/main");
+                Router.push("/Booking");
             }
         } catch (error) {
             setLoading(false);
