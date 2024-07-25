@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from '@/dbConfig/config';
-
+import Ev from '@/models/evModel';
 
 
 
@@ -13,10 +13,15 @@ export default async function handler(request:NextApiRequest,response:NextApiRes
             return response.status(400).json({ error: 'values are required' });
           }
           try {
-            // Process the data here (e.g., save to database)
-            
+            await connect();
+
+            const data = await Ev.find({is_available:true});
+            const Range = parseInt(range);
+            if (data.length === 0) {
+                return response.status(404).json({ error: 'No data found',range: { $gt: Range }  });
+              }
             // Simulate a successful response (replace with your actual logic)
-            return response.status(200).json({ success: true, message: "Booking saved successfully" });
+            return response.status(200).json({ success: true, data });
           } catch (error) {
             // Handle any errors that occur during processing
             console.error("Error processing booking", error);

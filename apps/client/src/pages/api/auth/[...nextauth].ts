@@ -4,42 +4,52 @@ import user from '@/models/userModel';
 import { connect } from '@/dbConfig/config';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+// Extend the NextAuth session and token types
 declare module 'next-auth' {
-    interface Session {
-      user: {
-        id: string;
-        name: string;
-        email: string;
-        image?: string;
-      };
-    }
-  
-    interface User {
+  interface Session {
+    user: {
       id: string;
-    }
-  
-    interface JWT {
-      id: string;
-    }
+      email: string;
+      admin: boolean;
+      name: string;
+    };
   }
+
+  interface User {
+    id: string;
+    email: string;
+    admin: boolean;
+  }
+
+  interface JWT {
+    id: string;
+    email: string;
+    admin: boolean;
+  }
+}
 
 const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   providers: [
     CredentialsProvider({
       type: 'credentials',
       credentials: {},
       async authorize(credentials, req) {
-        const { email, password } = credentials as { email: string, password: string };
-        
+        const { email, password } = credentials as { email: string; password: string };
+
         try {
           await connect();
-          console.log('NEXTAUTH_SECRET:', process.env.NEXTAUTH_SECRET);
-          const User = await user.findOne({ email: email });
+          const User = await user.findOne({ email });
           if (User && User.password === password) {
-            return { id: User._id.toString(), email: User.email };
+            return {
+              id: User._id.toString(),
+              email: User.email,
+              admin: User.isAdmin,
+              name: User.name,
+            };
           }
           throw new Error('Invalid email or password');
         } catch (error) {
@@ -52,7 +62,23 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/Login',
   },
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.admin = user.admin;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.id as string;
+      session.user.email = token.email as string;
+      session.user.admin = token.admin as boolean;
+      return session;
+    },
+  },
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
